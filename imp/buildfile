@@ -10,10 +10,16 @@ COPYRIGHT = ""
 # Specify Maven 2.0 remote repositories here, like this:
 repositories.remote << "http://www.ibiblio.org/maven2/"
 
+Project.local_task :start
+
 desc "The Imp project"
 define "imp" do
 
   project.version = VERSION_NUMBER
   project.group = GROUP
   manifest["Implementation-Vendor"] = COPYRIGHT
+  
+  task :start => :compile do
+    system "scala -classpath target/classes Converter"
+  end
 end
