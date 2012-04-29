@@ -13,6 +13,7 @@ object Converter {
     val frame = makeFrame(200, 100)
     frame.getContentPane().add(field)
     frame.getContentPane().add(result)
+    frame.setVisible(true)
   }
   
   private def string2Double(string: String, func: Double => Double): String = {
@@ -30,7 +31,6 @@ object Converter {
     frame.setLayout(new BoxLayout(frame.getContentPane, BoxLayout.Y_AXIS))
     frame.setSize(width, height)
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
-    frame.setVisible(true)
     
     frame
   }
