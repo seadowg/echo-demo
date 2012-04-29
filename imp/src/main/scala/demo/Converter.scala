@@ -3,44 +3,36 @@ import java.awt.event._
 
 object Converter {
   def main(args: Array[String]) {
-    val frame = makeFrame()
+    val field = new JTextField("0.0")
+    val result = new JLabel("0.0")
+
+    field.addKeyListener(new TyperListener(
+      e => result.setText(string2Double(field.getText, d => d * 1.62)) 
+    ))
+
+    val frame = makeFrame(200, 100)
+    frame.getContentPane().add(field)
+    frame.getContentPane().add(result)
   }
   
-  def makeFrame(): JFrame = {
+  private def string2Double(string: String, func: Double => Double): String = {
+    try {
+      "%.2f".format(func(string.toDouble)).toString
+    }
+    
+    catch {
+      case e: NumberFormatException => "n/a"
+    }
+  }
+  
+  def makeFrame(width: Int, height: Int): JFrame = {
     val frame = new JFrame
-    frame.setContentPane(new ConverterView)
     frame.setLayout(new BoxLayout(frame.getContentPane, BoxLayout.Y_AXIS))
-    frame.setSize(200, 200)
+    frame.setSize(width, height)
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE)
     frame.setVisible(true)
     
     frame
-  }
-}
-
-class ConverterView extends JPanel {
-  val field = new JTextField("0.0")
-  val result = new JLabel("0.0")
-  
-  field.addKeyListener(new TyperListener(e => convert()))
-  
-  addElementsToView()
-  
-  private def convert() {
-    val value = field.getText()
-    
-    try {
-      result.setText((value.toDouble * 1.62).toString)
-    }
-      
-    catch {
-      case _ => result.setText("n/a")
-    }
-  }
-  
-  private def addElementsToView() {
-    this.add(field)
-    this.add(result)
   }
 }
 

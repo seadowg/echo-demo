@@ -12,7 +12,7 @@ object Converter extends EchoApp {
       (v,s) => string2Double(v, d => d * (1 + (s.toDouble / 100)))
     })
     
-    val frame = Frame(200, 200, List(
+    val frame = Frame(200, 100, List(
       field,
       slider,
       result
